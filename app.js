@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import apiRoutes from "./routes/apiRoutes.js";
@@ -8,14 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(express.static("dist"));
 
-const dbUri = "mongodb://127.0.0.1:27017/restapi";
-const port = 3000;
-
-mongoose.connect(dbUri)
+mongoose.connect(process.env.URI)
     .then(() => {
-        console.log(`connected to ${dbUri}`);
-        app.listen(port, () => {
-            console.log(`listening on http://localhost:${port}`);
+        console.log(`connected to ${process.env.URI}`);
+        app.listen(process.env.PORT, () => {
+            console.log(`listening on http://localhost:${process.env.PORT}`);
         })
     })
     .catch(err => console.error(err));
